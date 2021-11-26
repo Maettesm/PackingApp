@@ -1,5 +1,5 @@
 <?php
-include '../02_Urlaubsplanung_safe/sql.php';
+include '../sql/sql.php';
 ?>
 <table>
     <tr>

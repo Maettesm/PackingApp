@@ -14,7 +14,7 @@
         }
         </script>
         <?php
-        include '../02_Urlaubsplanung_safe/sql.php';
+        include 'sql/sql.php';
         ?>
     </head>
     <body>
@@ -84,12 +84,12 @@
     <div class="grid-container">
         <div class="grid-item1">
             <?php
-            include '../02_Urlaubsplanung_safe/insert_gegenstand.inc.php';
+            include '02_Urlaubsplanung_safe/insert_gegenstand.inc.php';
              ?>
         </div>
         <div class="grid-item2">
             <?php
-            include '../02_Urlaubsplanung_safe/insert_kategorie.inc.php';
+            include '02_Urlaubsplanung_safe/insert_kategorie.inc.php';
              ?>
         </div>
     <div>
