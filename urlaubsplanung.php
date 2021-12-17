@@ -1,97 +1,112 @@
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Gegestände anlegen</title>
-        <link rel="stylesheet" type="text/css" href="/01_MM/CSS/style.css">
-        <h1>Packliste</h1>
-        <script type="text/javascript">
-        function send(aktion,id)
-        {
-        document.f.aktion.value = aktion;
-        document.f.id.value = id;
-        document.f.submit();
-        }
-        </script>
-        <?php
-        include 'sql/sql.php';
-        ?>
-    </head>
-    <body>
-        <?php
-            $conn = new mysqli("$servername", "$username", "$password", "$database");
+<head>
+    <meta charset="utf-8">
+    <title>Gegestände anlegen</title>
+    <link rel="stylesheet" type="text/css" href="/01_MM/CSS/style.css">
+    <h1>Packliste</h1>
+    <script type="text/javascript">
+    function send(aktion,id)
+    {
+    document.f.aktion.value = aktion;
+    document.f.id.value = id;
+    document.f.submit();
+    }
+    </script>
+    <?php
+    include 'sql/sql.php';
+    include '02_Urlaubsplanung_safe/functions.php'
+    ?>
+</head>
+<body>
+<?php
 
-            if (isset($_POST["aktion"]))
+    $conn = new mysqli("$servername", "$username", "$password", "$database");
+
+    if (isset($_POST["aktion"]))
+
+    {
+
+        //  Gegenstand Einfügen  //
+
+        if ($_POST["aktion"] == "0")
 
             {
-
-                //  Gegenstand Einfügen  //
-
-                if ($_POST["aktion"] == "0")
-
-                {
-                    $gegenstand = $conn->prepare("INSERT INTO gegenstand
-                                                (gs_name, ka_id)
-                                                VALUES (?, ?)");
-                        if (false===$gegenstand)
-                        {
-                            die('prepare() failed:' .htmlspecialchars($conn->error));
-                        }
-                    $rc = $gegenstand->bind_param("si", $_POST["gs_name"][0], $_POST["ka_id"]);
-                        if (false===$rc)
-                        {
-                            die('bind_param() failed:' .htmlspecialchars($conn->error));
-                        }
-                    $rc = $gegenstand->execute();
-                        if (false===$rc)
-                        {
-                            die('execute() failed:' .htmlspecialchars($conn->error));
-                        }
-                    $gegenstand->close();
-                    $conn->close();
-                }
-
-                // Kategorie Einfügen //
-
-                if ($_POST["aktion"] == "1")
-                {
-                    $kategorie = $conn->prepare("INSERT INTO kategorie
-                                                (ka_name) VALUES (?)");
-                        if (false===$kategorie)
-                        {
-                            die('prepare() failed:' .htmlspecialchars($conn->error));
-                        }
-                    $rc = $kategorie->bind_param("s", $_POST["new_kat"]);
-                        if (false===$rc)
-                        {
-                            die('bind_param() failed:' .htmlspecialchars($conn->error));
-                        }
-                    $rc = $kategorie->execute();
-                        if (false===$rc)
-                        {
-                            die('execute() failed:' .htmlspecialchars($conn->error));
-                        }
-                    $kategorie->close();
-                    $conn->close();
-                }
+            $query  =   "INSERT INTO gegenstand
+                        (gs_name, ka_name)
+                        VALUES (?, ?)";
+            $type   =   "ss";
+            $params = array($_POST['gs_name'][0], $_POST['insert_ka_name'][0]);
+            print_r($params);
+            print_r($_POST['insert_ka_name']);
+            insertData($query, $type, $params);
             }
 
 
-        ?>
-    <form name="f" action="urlaubsplanung.php" method="post">
-    <input name="aktion" type="hidden">
-    <input name="id" type="hidden">
-    <div class="grid-container">
-        <div class="grid-item1">
-            <?php
-            include '02_Urlaubsplanung_safe/insert_gegenstand.inc.php';
-             ?>
-        </div>
-        <div class="grid-item2">
-            <?php
-            include '02_Urlaubsplanung_safe/insert_kategorie.inc.php';
-             ?>
-        </div>
-    <div>
-    </body>
+        // Kategorie Einfügen //
+
+        else if ($_POST["aktion"] == "1")
+
+            {
+            $query  =  'INSERT INTO kategorie
+                        (ka_name)
+                        VALUES (?)';
+            $type   =   's';
+            $params = array($_POST['ka_name']);
+            insertData($query, $type, $params);
+            }
+
+        // Gegenstand Update //
+
+        else if ($_POST["aktion"] == "2")
+
+        {
+
+            $id     =   $_POST["id"];
+            $query  =  "UPDATE gegenstand
+                        SET gs_name=?, ka_name=?
+                        WHERE gs_id = $id";
+            $type   =   "ss";
+            $params = array($_POST["gs_name"][$id], $_POST["update_ka_name"][$id]);
+            updateData($query, $type, $params);
+
+        }
+
+        // Kategorie Update //
+
+        else if ($_POST["aktion"] == "3")
+
+        {
+
+            $id     =   $_POST["id"];
+            $query  =  "UPDATE kategorie
+                        SET ka_name=?
+                        WHERE ka_id = $id";
+            $type   =   "s";
+            $params = array($_POST["update_ka_name"][$id]);
+            updateData($query, $type, $params);
+
+        }
+
+    }
+
+
+?>
+<form name="f" action="urlaubsplanung.php" method="post">
+<input name="aktion" type="hidden">
+<input name="id" type="hidden">
+<div class="grid-container">
+<div class="grid-item1">
+
+<?php
+include '02_Urlaubsplanung_safe/insert_gegenstand.inc.php';
+?>
+</div>
+<div class="grid-item2">
+<?php
+include '02_Urlaubsplanung_safe/insert_kategorie.inc.php';
+?>
+</div>
+<div>
+</body>
 </html>

@@ -19,28 +19,46 @@ if ($conn = true)
         //Insert Table KATEGORIE
         $insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `kategorie`
                         ( ka_id int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                          ka_name varchar UNIQUE (55) DEFAULT NULL)");
-        $insertTable->execute();
+                          ka_name varchar (55) UNIQUE DEFAULT NULL)");
+
+        if (false===$insertTable)
+        {
+            die("prepare Create Table kategorie failed:". htmlspecialchars($conn->error));
+        }
+        $rc = $insertTable->execute();
+
+        if (false===$rc)
+        {
+            die("execute Create Table kategorie failed:". htmlspecialchars($conn->error));
+        }
+
 
         //Insert Table PERSONEN
+
         $insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `personen`
                         ( ps_id int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                          ps_name varchar UNIQUE (40) DEFAULT NULL)");
+                          ps_name varchar (40) UNIQUE DEFAULT NULL)");
         $insertTable->execute();
 
         //Insert Table GEGENSTAND
         $insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `gegenstand`
                         ( gs_id int(3) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                          gs_name varchar UNIQUE (40) NOT NULL,
-                          ka_id int NOT NULL
-                         )");
+                          gs_name varchar (40) UNIQUE NOT NULL,
+                          ka_name varchar (55) NOT NULL
+                           )");
+           if (false===$insertTable)
+           {
+               die("prepare Create Table kategorie failed:". htmlspecialchars($conn->error));
+           }
+
         $insertTable->execute();
 
         // Build Contsraints
-        $insertTable = $conn->prepare("ALTER TABLE gegenstand
+
+        /*$insertTable = $conn->prepare("ALTER TABLE gegenstand
                                         ADD CONSTRAINT fk_kategorie
-                                        FOREIGN KEY (ka_id) REFERENCES kategorie(ka_id)");
-        $insertTable->execute();
+                                        FOREIGN KEY (ka_name) REFERENCES kategorie(ka_name)");
+        $insertTable->execute();*/
     }
     else
     {

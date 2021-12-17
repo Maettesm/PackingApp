@@ -1,61 +1,60 @@
 <?php
-include '../sql/sql.php';
-?>
-<table>
-    <tr>
-        <th>Gegenstand</th>
-        <th>Kategorie</th>
-    </tr>
-    <tr>
-        <td><input type="text" size="25" name="gs_name[0]"></td>
-        <td><?php
-        echo "<select name='ka_id'>\n";
-        $conn = new mysqli("$servername", "$username", "$password", "$database");
-        $res = $conn->query("SELECT * FROM kategorie");
-        while ($dsatz = $res->fetch_assoc())
+include 'sql/sql.php';
+
+echo "<table>\n";
+echo "<tr>\n";
+echo "<th>Gegenstand</th>";
+echo "<th>Kategorie</th>";
+echo "</tr>\n\n";
+
+
+// Insert new Gegenstand
+echo "<tr>";
+echo "<td><input type='text' size='25' name='gs_name[0]'></td>\n";
+echo "<td><select type='text' name='insert_ka_name[0]'>\n";
+
+// get all categories ans choose
+$conn = new mysqli("$servername", "$username", "$password", "$database");
+$res = $conn->query("SELECT * FROM kategorie");
+
+while ($dsatz = $res->fetch_assoc())
+    {
+        $ka_id = $dsatz["ka_id"];
+        $ka_name = $dsatz["ka_name"];
+        echo "<option name='$ka_name' value='$ka_name'>$ka_name</option>\n";
+    }
+echo "</select></td>\n";
+
+// Safe new Gegenstand
+echo "<td><a href='javascript:send(0,0);'>Speichern</a></td></tr>\n\n";
+
+
+
+
+// List all Gegenstand and Kategorien
+$conn = new mysqli("$servername", "$username", "$password", "$database");
+$query= 'SELECT * FROM gegenstand
+        ORDER BY ka_name, gs_name';
+
+$gegenstaende = $conn->query($query) or die(mysqli_error());
+while ($dsatz = $gegenstaende->fetch_assoc())
+    {
+        if (false===$dsatz)
         {
-            $ka_id = $dsatz["ka_id"];
-            $ka_name = $dsatz["ka_name"];
-            echo "<option name='$ka_id' value='$ka_id'>$ka_name</option>\n";
+            die('fetch_assoc failed:' .htmlspecialchars($gegenstaende->error));
         }
-        echo "</select>\</td>";
-        ?>
+            $gs_id   = $dsatz['gs_id'];
+            $gs_name = $dsatz['gs_name'];
+            $ka_name = $dsatz['ka_name'];
 
-        <td><a href='javascript:send(0,0);'>Speichern</a></td></tr>
-        <?php
+        echo "<tr>\n";
+        echo "<td><input type='text' value='$gs_name' size='25' name='gs_name[$gs_id]'></td>\n";
+        echo "<td><select name='update_ka_name[$gs_id]'>\n";
+        list_data();
+        echo "</select>\n";
+        //echo "<td><input type='text' value='$ka_name' name='update_ka_name[$gs_id]'></td>\n";
+        echo "<td><a href='javascript:send(2,$gs_id);'>Ändern</a></td>\n</tr>\n\n";
+    }
 
-        $conn = new mysqli("$servername", "$username", "$password", "$database");
-        $query= 'SELECT gegenstand.gs_name, kategorie.ka_name, kategorie.ka_id
-                    FROM gegenstand
-                    INNER JOIN kategorie ON gegenstand.ka_id = kategorie.ka_id
-                    ORDER BY kategorie.ka_id';
-
-        $gegenstaende = $conn->query($query) or die(mysqli_error());
-        while ($dsatz = $gegenstaende->fetch_assoc())
-        {
-            if (false===$dsatz)
-            {
-                die('fetch_assoc failed:' .htmlspecialchars($gegenstaende->error));
-            }
-            $gegenstand = $dsatz['gs_name'];
-            $kategorie = $dsatz['ka_name'];
-            $ka_id     = $dsatz['ka_id'];
-
-                        echo "<tr>\n <td>$gegenstand</td>\n <td><select name='ka_upd'>\n";
-                                $conn = new mysqli("$servername", "$username", "$password", "$database");
-                                $res = $conn->query("SELECT * FROM kategorie");
-                                while ($dsatz = $res->fetch_assoc())
-                                {
-                                    $ka_id2 = $dsatz["ka_id"];
-                                    $ka_name2 = $dsatz["ka_name"];
-                                    $selected = $ka_name2==$kategorie;
-                                    echo "<option name='$ka_id2' value='$ka_id2'>$ka_name2</option>\n";
-                                }
-                                    echo "<option name='$ka_id2' value='$ka_id' selected ='selected'>$kategorie</option>\n";
-                                    echo "</select>\n </td>\n </tr>\n";
-        }
     ?>
-</table>
-<table>
-
 </table>
