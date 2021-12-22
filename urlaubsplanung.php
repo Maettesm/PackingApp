@@ -88,6 +88,24 @@
 
         }
 
+        // Gegestand löschen //
+
+        else if ($_POST["aktion"]=== "4")
+        {
+            $id = $_POST['id'];
+            $query = "DELETE FROM gegenstand WHERE gs_id = $id";
+            delete_data($query);
+        }
+
+        // Kategorie löschen //
+
+        else if ($_POST["aktion"]=== "5")
+        {
+            $id = $_POST['id'];
+            $query = "DELETE FROM kategorie WHERE ka_id = $id";
+            delete_data($query);
+        }
+
     }
 
 

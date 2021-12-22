@@ -31,6 +31,7 @@ echo "<td><a href='javascript:send(0,0);'>Speichern</a></td></tr>\n\n";
 
 
 
+
 // List all Gegenstand and Kategorien
 $conn = new mysqli("$servername", "$username", "$password", "$database");
 $query= 'SELECT * FROM gegenstand
@@ -53,7 +54,8 @@ while ($dsatz = $gegenstaende->fetch_assoc())
         list_data();
         echo "</select>\n";
         //echo "<td><input type='text' value='$ka_name' name='update_ka_name[$gs_id]'></td>\n";
-        echo "<td><a href='javascript:send(2,$gs_id);'>Ändern</a></td>\n</tr>\n\n";
+        echo "<td><a href='javascript:send(2,$gs_id);'>Ändern</a></td>\n\n";
+        echo "<td><a href='javascript:send(4,$gs_id);'>Löschen</a></td>\n</tr>\n\n";
     }
 
     ?>
