@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: green;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+th {
+}
+
+a:link {
+
+}
+
+a:visited {
+
+}600px
+
+a:hover {
+
+}
+
+a:active
+{
+
+}
+
+button {
+  width: 140px;
+  border: 2px solid green;
+  padding: 5px 2px 5px 2px;
+  background-color: #fff;
+}
+
+button:hover {
+  background-color: #999;
+}
+
+.btn_del {
+  width: 30px;
+  border-color: red;
+  background-color: red;
+}
+
+input {
+  width: 140px;
+  border: 2px solid green;
+  padding: 5px 10px 5px 10px;
+  background-color: #fff;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+select {
+  width: 140px;
+  border: 2px solid green;
+  padding: 5px 10px 5px 10px;
+  background-color: #fff;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+option {
+  width: 120px;
+  order: 2px solid green;
+  background-color: #fff;
+}
+
+.fa-trash {
+  color: white;
+}
+
+.row {
+  padding-top: 10%;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+.col-1 {
+  width: 33.3%;
+}
+
+.col-2 {
+  width: 33.3%;
+}
+
+.col-3 {
+  width: 33.3%;
+}
