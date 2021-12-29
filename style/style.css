@@ -65,6 +65,10 @@ select {
   font-weight: bold;
 }
 
+select:invalid {
+  color: grey;
+}
+
 option {
   width: 120px;
   order: 2px solid green;
