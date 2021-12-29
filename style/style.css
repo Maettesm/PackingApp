@@ -19,7 +19,7 @@ a:link {
 
 a:visited {
 
-}600px
+}
 
 a:hover {
 
@@ -30,6 +30,12 @@ a:active
 
 }
 
+html,
+body {
+  background-image: linear-gradient(to bottom, #9fc5e8, #4116b1);
+  height: 100%;
+}
+
 button {
   width: 140px;
   border: 2px solid green;
@@ -38,35 +44,55 @@ button {
 }
 
 button:hover {
-  background-color: #999;
+  background-color: #333;
 }
 
 .btn_del {
   width: 30px;
-  border-color: red;
-  background-color: red;
+  border-color: #990000;
+  background-color: #990000;
+  border-radius: 50%;
+}
+
+.btn_upd {
+  width: 30px;
+  border-color: #38761d;
+  background-color: #38761d;
+  border-radius: 50%;
+}
+
+.btn_save {
+  width: 30px;
+  border-color: #bcbcbc;
+  background-color: #bcbcbc;
+  border-radius: 50%;
 }
 
 input {
   width: 140px;
-  border: 2px solid green;
-  padding: 5px 10px 5px 10px;
-  background-color: #fff;
+  background-color: #e8e4f3;
+  border: 0;
+  padding: 5px 5px 15px 5px;
   text-transform: capitalize;
-  font-weight: bold;
+  font-weight: 400;
+  box-shadow: 1px 1px inset #999;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 select {
   width: 140px;
-  border: 2px solid green;
-  padding: 5px 10px 5px 10px;
-  background-color: #fff;
+  background-color: #e8e4f3;
+  border: 0;
+  padding: 5px 5px 15px 5px;
   text-transform: capitalize;
-  font-weight: bold;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 select:invalid {
-  color: grey;
+  color: ;
 }
 
 option {
@@ -75,8 +101,11 @@ option {
   background-color: #fff;
 }
 
-.fa-trash {
+.fa-trash,
+.fa-arrow-right,
+.fa-plus {
   color: white;
+  font-weight: bold;
 }
 
 .row {

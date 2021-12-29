@@ -1,10 +1,7 @@
+<!-- Alle Gegenstände bearbeiten -->
 <?php
 echo "<table>\n";
-echo "<tr>";
-echo "<th>Gegenstand</th>";
-echo "<th>Kategorie</th>";
-echo "</tr>\n";
-
+echo "</br>";
 // List all Gegenstand and Kategorien ÄNDERN und LÖSCHEN
 $conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
 $query= 'SELECT gegenstand.ka_name, gegenstand.gs_name, gegenstand.gs_id, kategorie.ka_id FROM gegenstand, kategorie
@@ -27,7 +24,8 @@ while ($dsatz = $gegenstaende->fetch_assoc())
     echo "<td><select name='update_ka_name[$gs_id]'>\n";
     list_data();
     echo "</select></td>\n";
-    echo "<td><button type='button'><a href='javascript:send(2,$gs_id);'>Ändern</a></button></td>\n";
+    echo "<td><button type='button' class='btn_upd'><a href='javascript:send(2,$gs_id);'>";
+    echo "<i class='fa fa-arrow-right'></i></a></button></td>\n";
     echo "<td><button type='button' class='btn_del'><a href='javascript:send(4,$gs_id);'>";
     echo "<i class='fa fa-trash'></i></a></button></td>\n</tr>\n\n";
   }

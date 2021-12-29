@@ -1,6 +1,5 @@
+<!-- Insert new Gegenstand -->
 <?php
-// Insert new Gegenstand
-
 echo "<table>\n";
 echo "<tr>";
 echo "<td><input placeholder='Gegenstand' type='text' size='25' name='gs_name[0]'></td>\n";
@@ -20,6 +19,6 @@ while ($dsatz = $res->fetch_assoc())
 echo "</select></td>\n";
 
 // Safe new Gegenstand
-echo "<td><button type='button'><a href='javascript:send(0,0);'>Speichern</a></button></td></tr>\n";
+echo "<td><button type='button' class='btn_save'><a href='javascript:send(0,0);'>";
+echo "<i class='fa fa-plus'></i></a></button></td>\n";
 echo "</table>\n";
-echo "</form>";
