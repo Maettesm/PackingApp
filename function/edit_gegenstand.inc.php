@@ -1,19 +1,19 @@
 <!-- Alle Gegenstände bearbeiten -->
 <?php
 echo "<table>\n";
-echo "</br>";
 // List all Gegenstand and Kategorien ÄNDERN und LÖSCHEN
 $conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
-$query= 'SELECT gegenstand.ka_name, gegenstand.gs_name, gegenstand.gs_id, kategorie.ka_id FROM gegenstand, kategorie
+$query= 'SELECT gegenstand.ka_name, gegenstand.gs_name, gegenstand.gs_id, kategorie.ka_id
+        FROM gegenstand, kategorie
         WHERE gegenstand.ka_name = kategorie.ka_name
         ORDER BY ka_id, ka_name, gs_name';
 
-$gegenstaende = $conn->query($query) or die(mysqli_error());
-while ($dsatz = $gegenstaende->fetch_assoc())
+$stmt = $conn->query($query) or die(mysqli_error());
+while ($dsatz = $stmt->fetch_assoc())
   {
     if (false===$dsatz)
     {
-        die('fetch_assoc failed:' .htmlspecialchars($gegenstaende->error));
+        die('fetch_assoc failed:' .htmlspecialchars($stmt->error));
     }
       $gs_id   = $dsatz['gs_id'];
       $gs_name = $dsatz['gs_name'];

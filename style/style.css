@@ -3,6 +3,12 @@
   font-family: sans-serif;
 }
 
+html,
+body {
+  background-image: linear-gradient(to bottom, #9fc5e8, #4116b1);
+  height: 100%;
+}
+
 a {
   text-decoration: none;
   color: green;
@@ -11,34 +17,10 @@ a {
 }
 
 th {
-}
-
-a:link {
-
-}
-
-a:visited {
-
-}
-
-a:hover {
-
-}
-
-a:active
-{
-
-}
-
-html,
-body {
-  background-image: linear-gradient(to bottom, #9fc5e8, #4116b1);
-  height: 100%;
+  text-align: left;
 }
 
 button {
-  width: 140px;
-  border: 2px solid green;
   padding: 5px 2px 5px 2px;
   background-color: #fff;
 }
@@ -49,8 +31,8 @@ button:hover {
 
 .btn_del {
   width: 30px;
-  border-color: #990000;
-  background-color: #990000;
+  border-color: #900;
+  background-color: #900;
   border-radius: 50%;
 }
 
@@ -69,10 +51,8 @@ button:hover {
 }
 
 input {
-  width: 140px;
   background-color: #e8e4f3;
-  border: 0;
-  padding: 5px 5px 15px 5px;
+  padding: 5px 5px 5px 5px;
   text-transform: capitalize;
   font-weight: 400;
   box-shadow: 1px 1px inset #999;
@@ -81,10 +61,9 @@ input {
 }
 
 select {
-  width: 140px;
   background-color: #e8e4f3;
   border: 0;
-  padding: 5px 5px 15px 5px;
+  padding: 5px 5px 5px 5px;
   text-transform: capitalize;
   font-weight: 500;
   border-radius: 4px;
@@ -92,13 +71,7 @@ select {
 }
 
 select:invalid {
-  color: ;
-}
-
-option {
-  width: 120px;
-  order: 2px solid green;
-  background-color: #fff;
+  color: grey;
 }
 
 .fa-trash,
@@ -108,23 +81,37 @@ option {
   font-weight: bold;
 }
 
-.row {
-  padding-top: 10%;
+.container-lists {
+  display: grid;
+  grid-template-columns: repeat (4, 1fr);
+  grid-gap: 15px 15px;
 }
 
 [class*="col-"] {
-  float: left;
-  padding: 15px;
+  grid-column: auto;
 }
 
 .col-1 {
-  width: 33.3%;
+  grid-column-start: 1;
+  grid-row-end: span 4;
 }
 
 .col-2 {
-  width: 33.3%;
+  grid-column-start: 2;
 }
 
 .col-3 {
-  width: 33.3%;
+  grid-column-start: 3;
+}
+
+.col-4 {
+  grid-column-start: 4;
+}
+
+.col-5 {
+  grid-column-start: 1;
+}
+
+.col-6 {
+  grid-column-start: 2;
 }
