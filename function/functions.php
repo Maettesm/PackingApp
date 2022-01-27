@@ -17,7 +17,7 @@
   $rc = $stmt->execute();
     if (false===$rc)
     {
-      die('Bitte Kategorie wählen! execute() failed:' .htmlspecialchars($conn->error));
+      die('execute() failed:' .htmlspecialchars($conn->error));
     }
   $stmt->close();
   $conn->close();
@@ -118,7 +118,29 @@
 
   function lists($ka_name)
   {
-    echo "<tr><th style='width:150px'>$ka_name</th><th></th></tr>\n";
+
+// Table Name nach Kategorie //
+    echo "<tr><th style='width:150px'>$ka_name</th><th></th>\n";
+    echo "";
+// Table Erweiterung nach Personen //
+    $conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
+    $query = "SELECT * FROM personen ORDER BY ps_id";
+    $stmt = $conn->query($query) or die(mysqli_error());
+    while ($dsatz = $stmt->fetch_assoc())
+    {
+      $vorname = $dsatz['ps_vorname'];
+      $nachname= $dsatz['ps_nachname'];
+      $vorname = mb_substr($vorname,0,2);
+      $nachname= mb_substr($nachname,0,2);
+
+
+
+      echo "<th>$vorname $nachname</th>\n";
+    }
+    echo "<th></th></tr>\n";
+
+
+// Liste Gegenstände pro Kategorie und Mengenfeld
 
     $conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
     $query = "SELECT gs_name, gs_id, ka_name
@@ -128,10 +150,47 @@
     $stmt = $conn->query($query) or die(mysqli_error());
     while ($dsatz = $stmt->fetch_assoc())
     {
-    $gs_name = $dsatz['gs_name'];
-    $gs_id    = $dsatz['gs_id'];
+      $ka_name  = $dsatz['ka_name'];
+      $gs_name  = $dsatz['gs_name'];
+      $gs_id    = $dsatz['gs_id'];
 
-    echo "<tr><td style='width:150px'>$gs_name</td><td><input name='qty[$gs_id]' size='5' type='number'></td><td><input type='checkbox'></td></tr>\n";
+      $query1 = "SELECT * FROM personen ORDER BY ps_id";
+      $stmt1 = $conn->query($query1) or die(mysqli_error());
+      while ($dsatz1 = $stmt1->fetch_assoc())
+      {
+      $ps_id = $dsatz1['ps_id'];}
+
+      echo "<tr>";
+      echo "<td style='width:150px' >$gs_name</td>\n";
+      echo "<td><input type='number' name='qty[$gs_id]'></td>\n";
+
+// Checkboxes für Personen und Save-Button//
+      $query2 = "SELECT * FROM personen ORDER BY ps_id";
+      $stmt2 = $conn->query($query2) or die(mysqli_error());
+      while ($dsatz2 = $stmt2->fetch_assoc())
+        {
+        $ps_id = $dsatz2['ps_id'];
+        echo "<td><input type='checkbox' name='ps[$ps_id]'></td>\n";
+        }
+
+      echo "<td><button type='button' class='btn_save'><a href='javascript:send(7,$gs_id);'><i class='fa fa-plus'></i></a></button>\n</td>";
+      echo "</tr>\n";
     }
+    $conn->close();
   }
+
+// FUNKTION INSTALL DATABSE //
+
+function install_database($insertTable){
+  if (false===$insertTable)
+  {
+  die("prepare Create Table kategorie failed:". htmlspecialchars($conn->error));
+  }
+  $rc = $insertTable->execute();
+
+  if (false===$rc)
+  {
+  die("execute Create Table kategorie failed:". htmlspecialchars($conn->error));
+  }
+}
 ?>

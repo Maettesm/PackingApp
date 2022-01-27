@@ -8,7 +8,7 @@ $query= 'SELECT gegenstand.ka_name, gegenstand.gs_name, gegenstand.gs_id, katego
         WHERE gegenstand.ka_name = kategorie.ka_name
         ORDER BY ka_id, ka_name, gs_name';
 
-$stmt = $conn->query($query) or die(mysqli_error());
+$stmt = $conn->query($query) or die(mysqli_error($conn));
 while ($dsatz = $stmt->fetch_assoc())
   {
     if (false===$dsatz)
@@ -27,6 +27,6 @@ while ($dsatz = $stmt->fetch_assoc())
     echo "<td><button type='button' class='btn_upd'><a href='javascript:send(2,$gs_id);'>";
     echo "<i class='fa fa-arrow-right'></i></a></button></td>\n";
     echo "<td><button type='button' class='btn_del'><a href='javascript:send(4,$gs_id);'>";
-    echo "<i class='fa fa-trash'></i></a></button></td>\n</tr>\n\n";
+    echo "<i class='fa fa-trash'></i></a></button></td>\n</tr>\n";
   }
     echo "</table>\n";

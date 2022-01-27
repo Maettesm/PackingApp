@@ -50,13 +50,20 @@ button:hover {
   border-radius: 50%;
 }
 
+.btn_save_ps {
+  width: 30px;
+  border-color: #bcbcbc;
+  background-color: #bcbcbc;
+  border-radius: 50%;
+}
+
 input {
   background-color: #e8e4f3;
   padding: 5px 5px 5px 5px;
   text-transform: capitalize;
   font-weight: 400;
-  box-shadow: 1px 1px inset #999;
-  border-radius: 4px;
+  
+  border-radius: 0px;
   font-size: 12px;
 }
 
@@ -66,7 +73,7 @@ select {
   padding: 5px 5px 5px 5px;
   text-transform: capitalize;
   font-weight: 500;
-  border-radius: 4px;
+  border-radius: 0px;
   font-size: 12px;
 }
 
@@ -106,12 +113,4 @@ select:invalid {
 
 .col-4 {
   grid-column-start: 4;
-}
-
-.col-5 {
-  grid-column-start: 1;
-}
-
-.col-6 {
-  grid-column-start: 2;
 }

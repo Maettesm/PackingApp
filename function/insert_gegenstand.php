@@ -1,9 +1,10 @@
 <!-- Insert new Gegenstand -->
+
 <?php
 echo "<table>\n";
 echo "<tr>";
 echo "<td><input placeholder='Gegenstand' type='text' size='25' name='gs_name[0]'></td>\n";
-echo "<td><select required name='insert_ka_name[0]'>\n";
+echo "<td><select id='gs' required name='insert_ka_name[0]'>\n";
 echo "<option value='' disabled selected hidden>Kategorie</option>\n";
 
 // get all categories ans choose
@@ -19,6 +20,7 @@ while ($dsatz = $res->fetch_assoc())
 echo "</select></td>\n";
 
 // Safe new Gegenstand
-echo "<td><button type='button' class='btn_save'><a href='javascript:send(0,0);'>";
+echo "<td><button type='button' id='gs' class='btn_save'><a href='javascript:send(0,0);'>";
 echo "<i class='fa fa-plus'></i></a></button></td>\n";
 echo "</table>\n";
+?>
