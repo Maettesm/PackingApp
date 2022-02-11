@@ -1,7 +1,10 @@
 <?php
-echo "<form name='f' action='/PackingApp/index.php' method='post'>";
-echo "<input name='aktion' type='hidden'>";
-echo "<input name='id' type='hidden'>";
+$path = $_SERVER['DOCUMENT_ROOT'] . '/PackingApp';
+include_once $path . "/sql_database/config.php";
+include_once path . '/includes/header.php';
+?>
+<?php
+
 
 include_once $path . "/sql_database/config.php";
 
@@ -9,17 +12,17 @@ include_once $path . "/sql_database/config.php";
 
   {
 
-    //  Gegenstand Einfügen  //
+//  Gegenstand Einfügen  // = 0
 
     if ($_POST["aktion"] == "0")
     {
-      if (isset ($_POST['insert_ka_name'][0]))
+      if (isset ($_POST['ka_name'][0]))
       {
       $query  =   "INSERT INTO gegenstand
                    (gs_name, ka_name)
                    VALUES (?, ?)";
       $type   =   "ss";
-      $params = array($_POST['gs_name'][0], $_POST['insert_ka_name'][0]);
+      $params = array($_POST['gs_name'][0], $_POST['ka_name'][0]);
       insertData($query, $type, $params);
       }
       else
@@ -27,21 +30,29 @@ include_once $path . "/sql_database/config.php";
         echo "Bitte Kategorie auswählen";
       }
     }
-    // Kategorie einfügen //
+
+// Kategorie einfügen // = 1
 
     else if ($_POST["aktion"] == "1")
 
     {
-    $query  =  'INSERT INTO kategorie
-                (ka_name)
-                VALUES (?)';
-    $type   =   's';
-    $params = array($_POST['ka_name']);
-    insertData($query, $type, $params);
+      if (isset ($_POST['ka_name'][0]))
+      {
+      $query  =  'INSERT INTO kategorie
+                  (ka_name)
+                  VALUES (?)';
+      $type   =   's';
+      $params = array($_POST['ka_name'][0]);
+      insertData($query, $type, $params);
+    } else {
+      echo "Problem";
     }
 
 
-    // Urlaub Einfügen
+    }
+
+
+// Urlaub Einfügen // = 10
 
     else if ($_POST["aktion"] == "10")
 
@@ -51,7 +62,11 @@ include_once $path . "/sql_database/config.php";
               VALUES (?)";
     $type   = "s";
     $params = array($_POST['ul_name']);
-    insertData($query, $type, $params);
+    if ($_POST['ul_name'] == "")
+    {
+      echo "Bitte Urlaub ausfüllen";
+    } else
+      insertData($query, $type, $params);
     }
 
     // Person Einfügen
@@ -64,10 +79,16 @@ include_once $path . "/sql_database/config.php";
               VALUES (?, ?)";
     $type   = "ss";
     $params = array($_POST['ps_vorname'], $_POST['ps_nachname']);
-    insertData($query, $type, $params);
+    if ($_POST['ps_vorname'] == "" OR $_POST['ps_nachname'] == "" )
+      {
+        echo "Bitte >Vor- und Nachmane angeben";
+      } else
+      {
+        insertData($query, $type, $params);
+      }
     }
 
-    // Gegenstand Update //
+// Gegenstand Update // = 2
 
     else if ($_POST["aktion"] == "2")
 
@@ -79,7 +100,7 @@ include_once $path . "/sql_database/config.php";
     updateData($query, $type, $params);
     }
 
-    // Kategorie Update //
+// Kategorie Update //
 
     else if ($_POST["aktion"] == "3")
 
@@ -91,7 +112,7 @@ include_once $path . "/sql_database/config.php";
     updateData($query, $type, $params);
     }
 
-    // Gegestand löschen //
+// Gegestand löschen // = 4
 
     else if ($_POST["aktion"]=== "4")
 
@@ -101,7 +122,7 @@ include_once $path . "/sql_database/config.php";
     delete_data($query);
     }
 
-    // Kategorie löschen //
+// Kategorie löschen // = 5
 
     else if ($_POST["aktion"]=== "5")
 
@@ -111,33 +132,48 @@ include_once $path . "/sql_database/config.php";
     delete_data($query);
     }
 
-    //  Menge Einfügen  //
+//  Menge Einfügen  // = 7
 
     else if ($_POST["aktion"] == "7")
+
     {
-      if (isset($_POST['ps']))
-      {
-        $ps = $_POST['ps'];
-        print_r($ps);
-      }
+
       if (isset($_POST['qty']))
-      {
-        $ka_name  = $_POST['ka_name'];
-        $gs_id    = $_POST['id'];
-        $qty      = $_POST['qty'][$gs_id];
-        print_r($qty);
 
+      $ul_id = $_POST['ul_name'];
+      $gs_id_ps = $_POST['gs_id_ps'];
+      $qty = $_POST['qty'];
+
+
+      foreach ($gs_id_ps as $gs_id => $ps_array)
+
+        {
+
+          foreach ($ps_array as $ps => $ps_id)
+
+          {
+
+            $query    = "INSERT INTO packliste
+                          (ps_id, gs_id, ul_name, qty)
+                          VALUES (?,?,?,?)";
+            $type     = "iisi";
+            $params   = array($ps_id, $gs_id, $ul_id ,$qty);
+            insertData($query, $type, $params);
+          }
+        }
       }
 
-    $id = $_POST['id'];
-    print_r($id);
+//  Urlaub auswählen
 
-    $query  = "INSERT INTO Packliste
-                VALUES (? , ?, ?)";
-    $type   = "ii";
+  elseif ($_POST["aktion"]=='11')
 
+  {
 
+  if (isset($_POST['ul_id']))
 
+    {
+      $ul_id = $_POST['ul_id'];
     }
   }
+}
 ?>

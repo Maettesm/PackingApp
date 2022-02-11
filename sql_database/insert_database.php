@@ -1,8 +1,11 @@
 <?php
-require_once('../sql/config.php');
-require_once('../function/functions.php');
+$path = $_SERVER['DOCUMENT_ROOT'] . '/PackingApp';
+include_once $path . "/sql_database/config.php";
+include_once path . "/function/functions.php";
+?>
 
-$conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
+<?php
+$conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,"");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -29,7 +32,7 @@ if ($conn = true)
 
   $insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `kategorie`
                   ( ka_id int(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                    ka_name varchar (55) UNIQUE DEFAULT NULL)");
+                    ka_name varchar (55) UNIQUE NOT NULL)");
   install_database($insertTable);
 
 
@@ -48,8 +51,6 @@ if ($conn = true)
   install_database($insertTable);
 
 
-
-
 //Insert Table GEGENSTAND //
 
   $insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `gegenstand`
@@ -60,26 +61,61 @@ if ($conn = true)
   install_database($insertTable);
 
 
-//Insert Table GEGENSTAND //
+//Insert Table Packliste //
 
 $insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `packliste`
-                ( ps_is int (4) NOT NULL,
-                  ka_name varchar (55) NOT NULL,
+                ( ps_id int (4) NOT NULL,
                   gs_id int (4) NOT NULL,
-                  ul_name varchar (55) NOT NULL)");
+                  ul_name varchar (55) NOT NULL,
+                  qty int (6) NOT NULL)");
+install_database($insertTable);
+
+
+//Insert Teilnehmer //
+
+
+$insertTable = $conn->prepare("CREATE TABLE IF NOT EXISTS `teilnehmer`
+                ( ul_id int(4) NOT NULL,
+                  ul_name varchar (55) NOT NULL,
+                  ps_id int(4) NOT NULL)");
 install_database($insertTable);
 
 //Add Constraint to personen
 
-$addconstraint = $conn->prepare("ALTER TABLE urlaubsplanung.personen
+$addconstraint_personen = $conn->prepare("ALTER TABLE urlaubsplanung.personen
                                   DROP CONSTRAINT IF EXISTS uq_personen");
 
 
-$rc = $addconstraint->execute();
-$addconstraint = $conn->prepare("ALTER TABLE urlaubsplanung.personen
+$rc = $addconstraint_personen->execute();
+
+$addconstraint_personen = $conn->prepare("ALTER TABLE urlaubsplanung.personen
                                   ADD CONSTRAINT uq_personen
                                   UNIQUE (ps_vorname,ps_nachname)");
-$rc = $addconstraint->execute();
+$rc = $addconstraint_personen->execute();
+
+//Add Constraint to packliste
+
+$addconstraint_packliste = $conn->prepare("ALTER TABLE urlaubsplanung.packliste
+                                  DROP CONSTRAINT IF EXISTS uq_packliste");
+
+
+$rc = $addconstraint_packliste->execute();
+$addconstraint_packliste = $conn->prepare("ALTER TABLE urlaubsplanung.packliste
+                                  ADD CONSTRAINT uq_packliste
+                                  UNIQUE (ps_id,gs_id, ul_name, qty)");
+$rc = $addconstraint_packliste->execute();
+
+//Add Constraint to teilnehmer
+
+$addconstraint_packliste = $conn->prepare("ALTER TABLE urlaubsplanung.teilnehmer
+                                  DROP CONSTRAINT IF EXISTS uq_teilnehmer");
+
+
+$rc = $addconstraint_packliste->execute();
+$addconstraint_packliste = $conn->prepare("ALTER TABLE urlaubsplanung.teilnehmer
+                                  ADD CONSTRAINT uq_teilnehmer
+                                  UNIQUE (ps_id,ul_id)");
+$rc = $addconstraint_packliste->execute();
 
   if (false===$rc)
   {

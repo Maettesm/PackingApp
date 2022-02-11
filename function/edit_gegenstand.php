@@ -1,6 +1,16 @@
+<?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/PackingApp';
+include_once $path . "/sql_database/config.php";
+include_once path . '/includes/header.php';
+?>
+
 <!-- Alle Gegenstände bearbeiten -->
+
 <?php
 echo "<table>\n";
+echo "<tr>\n";
+echo "<th>Gegenstände bearbeiten</th>\n";
+echo "</tr>\n";
 // List all Gegenstand and Kategorien ÄNDERN und LÖSCHEN
 $conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
 $query= 'SELECT gegenstand.ka_name, gegenstand.gs_name, gegenstand.gs_id, kategorie.ka_id

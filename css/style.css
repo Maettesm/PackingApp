@@ -1,18 +1,22 @@
 * {
   box-sizing: border-box;
   font-family: sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
-html,
+header {
+  text-align: center;
+  margin: 25px;
+}
+
 body {
-  background-image: linear-gradient(to bottom, #9fc5e8, #4116b1);
-  height: 100%;
+  background: linear-gradient(to right, #9fc5e8, #4116b1);
 }
 
 a {
   text-decoration: none;
-  color: green;
-  text-transform: capitalize;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -22,11 +26,49 @@ th {
 
 button {
   padding: 5px 2px 5px 2px;
-  background-color: #fff;
 }
 
 button:hover {
   background-color: #333;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+ul {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  list-style-type: none;
+  height: 60px;
+  align-items: center;
+}
+
+li {
+  float: left;
+  margin: 0 20px;
+  border-radius: 20px;
+  height: 60px;
+  line-height: 60px;
+  width: 8%;
+  text-align: center;
+  background-color: green;
+}
+
+li a {
+  display: block;
+}
+
+li a:hover {
+  background-color: #333;
+  color: #888;
+}
+
+li a:active {
+  background-color: #999;
+  color: white;
 }
 
 .btn_del {
@@ -62,8 +104,6 @@ input {
   padding: 5px 5px 5px 5px;
   text-transform: capitalize;
   font-weight: 400;
-  
-  border-radius: 0px;
   font-size: 12px;
 }
 
@@ -73,7 +113,6 @@ select {
   padding: 5px 5px 5px 5px;
   text-transform: capitalize;
   font-weight: 500;
-  border-radius: 0px;
   font-size: 12px;
 }
 
@@ -89,9 +128,14 @@ select:invalid {
 }
 
 .container-lists {
+  margin: auto;
+  width: 1200px;
   display: grid;
-  grid-template-columns: repeat (4, 1fr);
-  grid-gap: 15px 15px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px 20px;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
 }
 
 [class*="col-"] {
@@ -100,7 +144,6 @@ select:invalid {
 
 .col-1 {
   grid-column-start: 1;
-  grid-row-end: span 4;
 }
 
 .col-2 {
@@ -109,8 +152,4 @@ select:invalid {
 
 .col-3 {
   grid-column-start: 3;
-}
-
-.col-4 {
-  grid-column-start: 4;
 }

@@ -116,10 +116,11 @@
 
 // Funktion KATEGORIE LISTEN
 
-  function lists($ka_name)
+  function lists($ka_name, $ul_id)
   {
 
 // Table Name nach Kategorie //
+
     echo "<tr><th style='width:150px'>$ka_name</th><th></th>\n";
     echo "";
 // Table Erweiterung nach Personen //
@@ -135,7 +136,7 @@
 
 
 
-      echo "<th>$vorname $nachname</th>\n";
+      echo "<th>$vorname$nachname</th>\n";
     }
     echo "<th></th></tr>\n";
 
@@ -162,18 +163,19 @@
 
       echo "<tr>";
       echo "<td style='width:150px' >$gs_name</td>\n";
-      echo "<td><input type='number' name='qty[$gs_id]'></td>\n";
+      echo "<td><input type='number' name='qty[$gs_id]' ></td>\n";
 
 // Checkboxes für Personen und Save-Button//
+
       $query2 = "SELECT * FROM personen ORDER BY ps_id";
       $stmt2 = $conn->query($query2) or die(mysqli_error());
       while ($dsatz2 = $stmt2->fetch_assoc())
         {
         $ps_id = $dsatz2['ps_id'];
-        echo "<td><input type='checkbox' name='ps[$ps_id]'></td>\n";
+        echo "<td><input type='checkbox' name='gs_id_ps[$gs_id][]' value='$ps_id'></td>\n";
         }
 
-      echo "<td><button type='button' class='btn_save'><a href='javascript:send(7,$gs_id);'><i class='fa fa-plus'></i></a></button>\n</td>";
+      echo "<td><button type='button' class='btn_save'><a href='javascript:send(7,0);'><i class='fa fa-plus'></i></a></button>\n</td>";
       echo "</tr>\n";
     }
     $conn->close();
@@ -182,6 +184,7 @@
 // FUNKTION INSTALL DATABSE //
 
 function install_database($insertTable){
+  $conn = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
   if (false===$insertTable)
   {
   die("prepare Create Table kategorie failed:". htmlspecialchars($conn->error));

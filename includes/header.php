@@ -6,12 +6,12 @@ include_once $path . "/sql_database/config.php";
 <html lang="de" dir="ltr">
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href=<?php path . '/css/style.css';?>>
+<link rel="stylesheet" type="text/css" href='/PackingApp/css/style.css'>
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Meine Packliste</title>
 <script type="text/javascript">
-function send(aktion,id,ps)
+function send(aktion,id)
 {
 document.f.aktion.value = aktion;
 document.f.id.value = id;
@@ -24,13 +24,13 @@ include_once path . "/function/form.php";
 ?>
 </head>
 <body>
-  <header>
-    <h1>Packing App</h1>
-  </header>
-  <nav>
-    <a href="function/insert_urlaub.php">Urlaub angeben</a>
-    <a href="function/insert_person.php">Personen hinzufügen</a>
-    <a href="function/insert_gegenstand.php">Gegenstände hinzufügen</a>
-    <a href="function/insert_kategorie.inc.php">Kategorien bearbeiten</a>
-    <a href="function/edit_gegenstand.inc.php">Gegenstände bearbeiten</a>
-  </nav>
+<header>
+<h1>Packing App</h1>
+</header>
+<nav>
+<ul>
+<li><a class="active" href="/PackingApp/index.php">APP</a></li>
+<li><a class="active" href="/PackingApp/site-main.php">Start</a></li>
+<li><a class="active" href="/PackingApp/packing_list.php">Packliste</a></li>
+</ul>
+</nav>
